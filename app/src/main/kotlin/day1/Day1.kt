@@ -1,21 +1,22 @@
-package main.kotlin.day01
+package day1
 
 import java.io.File
-import kotlin.math.abs
 
 const val DIAL_INITIAL_POSITION = 50
 const val DIAL_TOTAL_SIZE = 100
 
 fun main() {
-    val input = File("src/main/resources/day01/input.txt")
-    val moves = input.readLines()
+    val input = {}::class.java.getResource("/day1/input.txt")!!
+        .readText()
+        .lines()
+        .filter { it.isNotBlank() }
 
     // Sample:
     // val moves = listOf("L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L82")
-    val solutionPartOne = solvePartOne(moves)
+    val solutionPartOne = solvePartOne(input)
     println("Part One Password: $solutionPartOne")
 
-    val solutionPartTwo = solvePartTwo(moves)
+    val solutionPartTwo = solvePartTwo(input)
     println("Part Two Password: $solutionPartTwo")
 }
 
@@ -24,8 +25,8 @@ fun solvePartOne(moves: List<String>): Int {
     var zeroHitCount = 0
 
     for (move in moves) {
-        val direction = move.take(1) // L or R
-        var ticks = move.substring(1).toInt() // 0..n
+        val direction = move.take(1)
+        var ticks = move.substring(1).toInt()
 
         if (direction == "L") {
             ticks = 100 - ticks
@@ -69,7 +70,3 @@ fun solvePartTwo(moves: List<String>): Int {
 
     return zeroHitCount
 }
-
-// 50 -> 70L (30R)
-
-// 30 -> 30L (50R)
