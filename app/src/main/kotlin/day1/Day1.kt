@@ -1,13 +1,10 @@
 package day1
 
-import java.io.File
-
 const val DIAL_INITIAL_POSITION = 50
 const val DIAL_TOTAL_SIZE = 100
 
 fun main() {
-    val input = {}::class.java.getResource("/day1/input.txt")!!
-        .readText()
+    val input = utils.getInputForDay("day1")
         .lines()
         .filter { it.isNotBlank() }
 
