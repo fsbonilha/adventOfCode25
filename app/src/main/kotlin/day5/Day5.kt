@@ -11,10 +11,7 @@ fun main() {
     val ranges = splitInput[0].lines().filter { it.isNotBlank() }
     val ingredients = splitInput[1].lines().filter { it.isNotBlank() }.map { it.toBigInteger() }
 
-//    println("Ranges: $ranges")
-//    println("Ingredients: $ingredients")
-
-    val solutionOne = solvePartOne(ranges, ingredients)
+    val solutionOne = solvePartOneBinarySearch(ranges, ingredients)
     println("Solution Part One: $solutionOne")
 
     val solutionTwo = solvePartTwo(ranges)
@@ -42,11 +39,37 @@ fun solvePartOne(ranges: List<String>, ingredients: List<BigInteger>): Int {
     return freshCount
 }
 
+fun solvePartOneBinarySearch(ranges: List<String>, ingredients: List<BigInteger>): Int {
+    val sortedRanges = ranges.map { range -> range.split("-").map { it.toBigInteger() } }.sortedBy { it[0] }
+    val mergedRanges = mergeRanges(sortedRanges)
+
+    return ingredients.map { ingredient -> binarySearch(mergedRanges, ingredient) }.count { it }
+}
+
 fun solvePartTwo(ranges: List<String>): BigInteger {
     val sortedRanges = ranges.map { range -> range.split("-").map { it.toBigInteger() } }.sortedBy { it[0] }
     val mergedRanges = mergeRanges(sortedRanges)
 
     return mergedRanges.sumOf { it[1] - it[0] + BigInteger.ONE }
+}
+
+fun binarySearch(ranges: List<List<BigInteger>>, target: BigInteger): Boolean {
+    var low = 0
+    var high = ranges.size - 1
+
+    while (low <= high) {
+        val mid = low + (high - low) / 2
+
+        if (ranges[mid][0] <= target && target <= ranges[mid][1]) {
+            return true
+        } else if (target > ranges[mid][0]) {
+            low = mid + 1
+        } else {
+            high = mid - 1
+        }
+    }
+
+    return false
 }
 
 fun mergeRanges(ranges: List<List<BigInteger>>): List<List<BigInteger>> {
