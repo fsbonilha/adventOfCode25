@@ -48,13 +48,13 @@ fun getLargestNumber(bank: String, numbersToGet: Int): BigInteger {
     for (remaining in numbersToGet - 1 downTo 0) {
         var maxVoltage = 0
         for (index in startFrom..bank.lastIndex - remaining) {
-            val voltage = bank[index].toString().toInt()
+            val voltage = bank[index].digitToInt()
             if (voltage > maxVoltage) {
                 maxVoltage = voltage
                 startFrom = index + 1
             }
         }
-        result += maxVoltage.toBigInteger() * BigInteger.valueOf(10).pow(remaining)
+        result += maxVoltage.toBigInteger() * BigInteger.TEN.pow(remaining)
     }
     return result
 }
