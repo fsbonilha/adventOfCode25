@@ -37,8 +37,8 @@ fun solvePartOne(banks: List<String>): Int {
 }
 
 fun solvePartTwo(banks: List<String>, numbersToGet: Int): BigInteger {
-    return banks.fold(BigInteger.ZERO) { acc, bank ->
-        acc + getLargestNumber(bank, numbersToGet)
+    return banks.sumOf { bank ->
+        getLargestNumber(bank, numbersToGet)
     }
 }
 
